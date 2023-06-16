@@ -27,12 +27,18 @@ const breed = {
 
 if(!getFromStorage('petArr')){
     saveToStorage('petArr',[data])
+      // thu loi len tu storage
+      console.log(getFromStorage('petArr'));
+// nếu ở đây e không lấy dữ liệu giả mà bỏ vào petArr thi sao anh
 }
 
-const petArrr = getFromStorage('petArrr');
+const petArr = getFromStorage('petArr');
 
 if(!getFromStorage('breedArr')){
     saveToStorage('breedArr',[breed])
+
+  
+
 };
 
 const breedArr = getFromStorage('breedArr');

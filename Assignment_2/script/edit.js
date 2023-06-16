@@ -17,7 +17,7 @@ const tableBodyEl = document.getElementById("tbody");
 const formE1 = document.getElementById("container-form");
 const submitBtn = document.getElementById("submit-btn");
 
-const petArr = [];
+
 
 renderTableData(petArr);
 // In ra ở phần tbody của table
@@ -48,9 +48,7 @@ function renderTableData(petArr) {
                   pet.sterilized ? "bi-check-circle-fill" : "bi-x-circle-fill"
                 }"></i></td>
                
-                              <td>${pet.date.getDate()}/${
-        pet.date.getMonth() + 1
-      }/${pet.date.getFullYear()}</td>
+                <td>${pet.date}</td>
                               <td><button class="btn btn-danger" onclick="editPet('${
                   pet.id
                 }')">Edit</button>
@@ -169,12 +167,8 @@ submitBtn.addEventListener("click", function () {
       isValidate = false;
     }
     for (let i = 0; i < petArr.length; i++) {
-      if (data.id == petArr[i].id) {
-        alert("ID must be unique!");
-        isValidate = false;
-        break;
-      }
-      else if (data.age < 1 || data.age > 15) {
+     
+       if (data.age < 1 || data.age > 15) {
         alert("Age must be between 1 and 15 !");
         isValidate = false;
       }

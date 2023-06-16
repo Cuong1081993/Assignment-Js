@@ -16,8 +16,6 @@ const sterilizedInput = document.getElementById("input-sterilized");
 const tableBodyEl = document.getElementById("tbody");
 const healthyBtn = document.getElementById("healthy-btn");
 
-const petArr = [];
-
 renderTableData(petArr);
 
 // bắt sự kiện khi bấm vào select breed
@@ -27,23 +25,23 @@ typeInput.addEventListener("click", renderBreed);
 function renderBreed() {
   breedInput.innerHTML = "<option>Select Breed</option>";
 
-  // filter ra giống có type là dog
-  //filter ra giống có type là cat
   
   // Kiểm tra giá trị type để in ra đúng với giống
   if (typeInput.value === "Dog") {
-      const breedDogs = breedArr.filter((breedItem) => breedItem.type === "Dog");
-      breedDogs.forEach(function (breedItem) {
-          const option = document.createElement('option');
-          option.innerHTML= `${breedItem.breed}`;
-          breedInput.appendChild(option);
-        });
-    } else if (typeInput.value === "Cat") {
-        const breedCat = breedArr.filter((breedItem) => breedItem.type === "Cat");
-        breedCat.forEach(function (breedItem) {
-        const option = document.createElement('option');
-        option.innerHTML= `${breedItem.breed}`;
-        breedInput.appendChild(option);
+    // filter ra giống có type là dog
+    const breedDogs = breedArr.filter((breedItem) => breedItem.type === "Dog");
+    breedDogs.forEach(function (breedItem) {
+      const option = document.createElement("option");
+      option.innerHTML = `${breedItem.breed}`;
+      breedInput.appendChild(option);
+    });
+  } else if (typeInput.value === "Cat") {
+    //filter ra giống có type là cat
+    const breedCat = breedArr.filter((breedItem) => breedItem.type === "Cat");
+    breedCat.forEach(function (breedItem) {
+      const option = document.createElement("option");
+      option.innerHTML = `${breedItem.breed}`;
+      breedInput.appendChild(option);
     });
   }
 }
@@ -60,8 +58,7 @@ submitBtn.addEventListener("click", function () {
     color: colorInput.value,
     breed: breedInput.value,
     vaccinated: vaccinatedInput.checked,
-    date: new Date(),
-    bmi: "?",
+    date: new Date().getDay +'/' + new Date().getMonth + '/' + new Date().getFullYear,
   };
   const validate = validateData(data);
 
@@ -69,6 +66,9 @@ submitBtn.addEventListener("click", function () {
   if (validate) {
     //thêm pet vào danh sách
     petArr.push(data);
+
+    
+     saveToStorage('petArr',petArr);
     //Hiển thị danh sách Pet
     renderTableData(petArr);
 
@@ -94,10 +94,14 @@ function clearInput() {
 
 // In ra ở phần tbody của table
 function renderTableData(petArr) {
+  console.log(petArr);
+
   // nếu không có đoạn code này thì dữ liệu vẽ ra bị double
   tableBodyEl.innerHTML = "";
+
   // sử dụng forEach để duyệt qua từng tr và vẽ lại những gì cần hiển thị
   petArr.forEach((pet) => {
+    console.log(pet);
     const row = document.createElement("tr");
     row.innerHTML = `
     <th scope="row">${pet.id}</th>
@@ -119,10 +123,7 @@ function renderTableData(petArr) {
 							<td><i class="bi ${
                 pet.sterilized ? "bi-check-circle-fill" : "bi-x-circle-fill"
               }"></i></td>
-              <td>${pet.bmi}</td>
-							<td>${pet.date.getDate()}/${
-      pet.date.getMonth() + 1
-    }/${pet.date.getFullYear()}</td>
+							<td>${pet.date}</td>
 							<td><button class="btn btn-danger" onclick="deletePet('${
                 pet.id
               }')">Delete</button>
@@ -171,29 +172,31 @@ function validateData(data) {
     alert("Vui lòng điền độ dài !");
     isValidate = false;
   }
+
+
   for (let i = 0; i < petArr.length; i++) {
     if (data.id == petArr[i].id) {
       alert("ID must be unique!");
       isValidate = false;
       break;
     }
-    else if (data.age < 1 || data.age > 15) {
+    if (data.age < 1 || data.age > 15) {
       alert("Age must be between 1 and 15 !");
       isValidate = false;
     }
-    else if (data.weight < 1 || data.weight > 15) {
+    if (data.weight < 1 || data.weight > 15) {
       alert("Weight must be between 1 and 15 !");
       isValidate = false;
     }
-    else if (data.length < 1 || data.lenght > 100) {
+    if (data.length < 1 || data.lenght > 100) {
       alert("Age must be between 1 and 100 !");
       isValidate = false;
     }
-    else if (data.type === "Select Type") {
+    if (data.type === "Select Type") {
       alert("Please select Type !");
       isValidate = false;
     }
-    else if (data.breed === "Select Breed") {
+    if (data.breed === "Select Breed") {
       alert("Please select Breed !");
       isValidate = false;
       break;
@@ -237,5 +240,3 @@ healthyBtn.addEventListener("click", function () {
     healthyCheck = true;
   }
 });
-
-
