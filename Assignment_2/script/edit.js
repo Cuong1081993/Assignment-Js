@@ -17,8 +17,15 @@ const tableBodyEl = document.getElementById("tbody");
 const formE1 = document.getElementById("container-form");
 const submitBtn = document.getElementById("submit-btn");
 
+// Hàm chuyển đổi ngày tháng
+function formatDate(strdate) {
 
+  const date = new Date(strdate);
+  const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+  return date.toLocaleDateString("en-US", options);
+}
 
+// hiển thị table 
 renderTableData(petArr);
 // In ra ở phần tbody của table
 function renderTableData(petArr) {
@@ -48,7 +55,7 @@ function renderTableData(petArr) {
                   pet.sterilized ? "bi-check-circle-fill" : "bi-x-circle-fill"
                 }"></i></td>
                
-                <td>${pet.date}</td>
+                <td>${formatDate(pet.date)}</td>
                               <td><button class="btn btn-danger" onclick="editPet('${
                   pet.id
                 }')">Edit</button>

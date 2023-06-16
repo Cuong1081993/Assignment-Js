@@ -6,8 +6,8 @@ navbar.addEventListener('click',function(){
 });
 
 const data = {
-    id:'',
-    name: '',
+    id:'1',
+    name: 'Lion',
     age: 3,
     type: 'Cat',
     weight: 5,
@@ -21,15 +21,12 @@ const data = {
 };
 
 const breed = {
-    breed : 'Cat viet',
+    breed : 'Mèo tam thể',
     type: 'Cat'
 };
 
 if(!getFromStorage('petArr')){
     saveToStorage('petArr',[data])
-      // thu loi len tu storage
-      console.log(getFromStorage('petArr'));
-// nếu ở đây e không lấy dữ liệu giả mà bỏ vào petArr thi sao anh
 }
 
 const petArr = getFromStorage('petArr');

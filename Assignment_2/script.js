@@ -25,7 +25,6 @@ typeInput.addEventListener("click", renderBreed);
 function renderBreed() {
   breedInput.innerHTML = "<option>Select Breed</option>";
 
-  
   // Kiểm tra giá trị type để in ra đúng với giống
   if (typeInput.value === "Dog") {
     // filter ra giống có type là dog
@@ -45,9 +44,17 @@ function renderBreed() {
     });
   }
 }
+// Hàm chuyển đổi ngày tháng
+function formatDate(strdate) {
+
+  const date = new Date(strdate);
+  const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+  return date.toLocaleDateString("en-US", options);
+}
 
 // sự kiện cho nút Submit
 submitBtn.addEventListener("click", function () {
+
   const data = {
     id: idInput.value,
     name: nameInput.value,
@@ -58,7 +65,7 @@ submitBtn.addEventListener("click", function () {
     color: colorInput.value,
     breed: breedInput.value,
     vaccinated: vaccinatedInput.checked,
-    date: new Date().getDay +'/' + new Date().getMonth + '/' + new Date().getFullYear,
+    date: new Date(),
   };
   const validate = validateData(data);
 
@@ -67,8 +74,7 @@ submitBtn.addEventListener("click", function () {
     //thêm pet vào danh sách
     petArr.push(data);
 
-    
-     saveToStorage('petArr',petArr);
+    saveToStorage("petArr", petArr);
     //Hiển thị danh sách Pet
     renderTableData(petArr);
 
@@ -108,7 +114,7 @@ function renderTableData(petArr) {
 							<td>${pet.name}</td>
 							<td>${pet.age}</td>
 							<td>${pet.type}</td>
-							<td>${pet.weight}kg</td>
+							<td>${pet.weight} kg</td>
 							<td>${pet.length} cm</td>
 							<td>${pet.breed}</td>
 							<td>
@@ -123,7 +129,7 @@ function renderTableData(petArr) {
 							<td><i class="bi ${
                 pet.sterilized ? "bi-check-circle-fill" : "bi-x-circle-fill"
               }"></i></td>
-							<td>${pet.date}</td>
+							<td>${formatDate(pet.date)}</td>
 							<td><button class="btn btn-danger" onclick="deletePet('${
                 pet.id
               }')">Delete</button>
@@ -172,7 +178,6 @@ function validateData(data) {
     alert("Vui lòng điền độ dài !");
     isValidate = false;
   }
-
 
   for (let i = 0; i < petArr.length; i++) {
     if (data.id == petArr[i].id) {
