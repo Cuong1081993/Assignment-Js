@@ -13,6 +13,7 @@ if (userActive) {
   function displayTodoList() {
     // tim kiem nhung user dang login de loc ra todotask cua user
     let html = "";
+
     todoArr
       .filter((todo) => todo.owner === userActive.username)
       .forEach(function (todo) {
@@ -57,11 +58,8 @@ if (userActive) {
           liEl.classList.toggle("checked");
           // tim task vua kick vao (toggle)
 
-          const todo = todoArr.find(
-            (todoItem) =>
-              todoItem.owner === userActive.username &&
-              todoItem.task === liEl.textContent.slice(0, -1)
-          );
+          const todo = todoArr.find((todoItem) =>todoItem.owner === userActive.username && todoItem.task === liEl.textContent.slice(0, -1).trim());
+       
           // thay doi thuoc tinh isDone
           todo.isDone = liEl.classList.contains("checked") ? true : false;
 

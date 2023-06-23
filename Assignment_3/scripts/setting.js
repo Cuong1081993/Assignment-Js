@@ -5,6 +5,13 @@ if (userActive) {
   const inputCategory = document.getElementById("input-category");
   const btnSubmit = document.getElementById("btn-submit");
 
+  loadSetting();
+
+  function loadSetting() {
+    inputCategory.value = userActive.category;
+    inputPageSize.value = userActive.pageSize;
+  }
+
   btnSubmit.addEventListener("click", function () {
     if (validate) {
       //cap nhat lai user active
@@ -21,21 +28,19 @@ if (userActive) {
       saveToStorage("userArr", userArr);
       // reset form input va thong bao thanh cong
       alert("Setting successful !");
-      inputPageSize.value = "";
-      inputCategory.value = "General";
     }
   });
 
-  function validate(){
+  function validate() {
     let isValidate = true;
 
-    if(Number.isNaN(Number.parseInt(inputPageSize.value))){
-        alert("Page set not allow !")
-        isValidate = false;
+    if (Number.isNaN(Number.parseInt(inputPageSize.value))) {
+      alert("Page set not allow !");
+      isValidate = false;
     }
     return isValidate;
   }
-}else{
-    alert("Please login or register to use setting ! ");
-    window.location.assign("../index.html")
+} else {
+  alert("Please login or register to use setting ! ");
+  window.location.assign("../index.html");
 }
